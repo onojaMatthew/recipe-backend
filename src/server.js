@@ -3,10 +3,14 @@ import cors from "cors";
 import { ENV } from "./config/env.js";
 import { Favorite } from "./models/favorite.js";
 import { db } from "./config/db.js";
+import job from "./config/cron.js";
 
 const app = express();
 const port = ENV.PORT || 5000 
 
+if (ENV.NODE_ENV === "production") {
+  job.start();
+}
 app.use(cors());
 app.use(express.json());
 
